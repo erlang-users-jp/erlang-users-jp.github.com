@@ -1,0 +1,104 @@
+<HTML><HEAD><TITLE>Manpage of start_erl</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+</HEAD><BODY>
+<H1>start_erl</H1>
+Section: USER COMMANDS (1)<BR>Updated: erts  5.7<BR><A HREF="#index">Index</A>
+<A HREF="./">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>名前</H2>
+
+start_erl - Start Erlang for embedded systems on Windows NT(R)
+Windows NT(R) 上でErlangの組み込みシステムを開始する
+<A NAME="lbAC">&nbsp;</A>
+<H2>説明</H2>
+
+<P>
+
+このドキュメントは <I>start_erl</I> というWindows NT用のプログラムに対する説明です. 同名のプログラムは他のプラットフォームにも存在しますが、機能が異なります.
+<P>
+
+プログラム <I>start_erl</I> はコンパイル済みのバイナリとして&lt;Erlang root&gt;\erts-&lt;version&gt;\bin以下に、またソースファイルとして(&lt;Erlang root&gt;\erts-&lt;version&gt;\src)にあります。ソースコードが同梱されているのは、個人的な理由でちょっとした変更を簡単に加えられるようにするためです(例えば、定期的にプログラムを起動するとか:D)。また、Microsoft(R) Visual C++(R)と共に配布されている<I>nmake</I>プログラム用の&quot;make&quot;ファイルも同梱しています。しかし、どのWin32 C コンパイラでも直接コンパイルすることも可能です(少々修正が必要でしょうが)。
+<P>
+<P>
+
+このプログラム目的は、Windows NT(R)上でrelease handlingの補助を行うことです(FIXME:what is release handling?).このプログラムは<I>erlsrv</I>プログラムから呼ばれることを想定しており、リリースデータファイルstart_erl.dataを読み込み、Erlangを起動します。start_erlに与えるオプションの中にには、release handlerによって追加される/取り除かれるオプションが存在します(詳細は<I>-data</I> オプションを参考にしてください).
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>使い方</H2>
+
+<P>
+
+<B>start_erl [&lt;erl オプション&gt;] ++ [&lt;start_erl オプション&gt;]</B>
+
+<BR>
+
+<DL COMPACT><DT><DD>
+<P>
+
+<I>start_erl</I>は、以下のオプションを認識することができます： 
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>++:</B>
+
+<DD>
+[必須]start_erl に与えるオプションと、Erlangに与えるオプションを区別するためのオプションです。 <I>++</I> の<I>前に</I>記述されたオプションは、<I>erl</I> に与えられます。また、<I>++</I> の <I>後に</I> 記述されたオプションは <I>start_erl</I> 自体に送信されます。
+<DT><B>-reldir &lt;release root&gt;:</B>
+
+<DD>
+<BR>&nbsp;環境変数&nbsp;<I>RELDIR</I>&nbsp;が指定されていない場合に限り、必須のオプションです。&nbsp;start_erl&nbsp;に対して、「release&nbsp;tree」がファイルシステムの中でどこに存在するかを指定します(&lt;Erlang&nbsp;root&gt;\releases&nbsp;のように)(FIXME:What&nbsp;is&nbsp;release&nbsp;tree?)。&nbsp;<I>start_erl.data</I>ファイルの位置が指定されていない場合、<I>start_erl.data</I>は&nbsp;release&nbsp;root&nbsp;で指定されたディレクトリにあることが期待されます。
+<DT><B>-data &lt;data file name&gt;:</B>
+
+<DD>
+[あってもなくてもよい] &lt;release root&gt; 内にある、start_erl.data のかわりに使用するデータファイルを指定します。&lt;release root&gt;からの相対パスか、ドライブレターを含めた絶対パスを指定してください。このオプションはアップグレード中のリリースハンドラで利用されます。通常の操作を行うときには使用するべきではありません。このリリースデータファイルは、通常は別の名前を使用するべきではありません。
+Optional, specifies another data file than start_erl.data in the &lt;release root&gt;. It is specified relative to the &lt;release root&gt; or absolute (includeing drive letter etc.). This option is used by the release handler during upgrade and should not be used during normal operation. The release data file should not normally be named differently.
+<DT><B>-bootflags &lt;boot flags file name&gt;:</B>
+
+<DD>
+[あってもなくてよよい]:
+&lt;release root&gt;ディレクトリから、&lt;boot flags file&gt;への相対パスを指定します。&lt;release root&gt;ディレクトリの中には、 <I>.boot</I> ファイルなどが保存されています。このファイルに記述されているオプションは、Erlang 起動時に自動的にオプションとして付加されます。これにより、リリース毎に異なったエミュレータを簡単に立ち上げることができます。
+</DL>
+</DL>
+
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>NOTES</H2>
+
+<P>
+
+ソースコードが配布されているため、容易に新たなオプションを受け付けるように<I>start_erl</I>��修正するすることができます。ただし、<I>-data</I> オプションが上記の「リリースハンドラ内で正常に動作する」というセマンティクスを保持したまま動作するようにしてください。
+<P>
+
+Erlangエミュレータの有無は、リリースデータファイル内で指定されたエミュレータバージョン用のレジストリキーを調べることで判断できます。このチェックを行うには、新しいエミュレータをアップグレードする前に適切にインストールする必要があります(FIXME:アヤシイ)。
+<P>
+
+<I>start_erl</I> はエミュレータ固有のファイルと一緒に置かれていますが、その動作がエミュレータのバージョン依存あることは望まれていません。リリースハンドラは、エミュレータが再起動する際に <I>-machine</I> オプションを<I>erlsrv</I>に対して与えることで、変更することが可能です。
+アップグレード中に <I>start_erl</I> プログラムが上書きされないように注意してください。
+<P>
+
+<I>erlsrv</I> プログラムのデフォルトオプションは、リリースハンドリングを行うには不十分です。<I>erlsrv</I>を起動するマシンは、 <I>start_erl</I> プログラムから起動して、<I>++</I>の後に引数を任意のオプションを与えてください。
+<A NAME="lbAF">&nbsp;</A>
+<H2>関連項目</H2>
+
+<P>
+
+<A HREF="./erlsrv.html">erlsrv</A>(1), <A HREF="./release_handler.html">release_handler</A>(3)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">名前</A><DD>
+<DT><A HREF="#lbAC">説明</A><DD>
+<DT><A HREF="#lbAD">使い方</A><DD>
+<DT><A HREF="#lbAE">NOTES</A><DD>
+<DT><A HREF="#lbAF">関連項目</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://github.com/hamano/man2html/">man2html</A>,
+using the manual pages.<BR>
+Time: 00:07:04 GMT, July 31, 2009
+</BODY>
+</HTML>

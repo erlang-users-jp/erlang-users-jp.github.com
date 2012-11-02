@@ -1,0 +1,318 @@
+<HTML><HEAD><TITLE>Manpage of erlc</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+</HEAD><BODY>
+<H1>erlc</H1>
+Section: USER COMMANDS (1)<BR>Updated: erts  5.6.3<BR><A HREF="#index">Index</A>
+<A HREF="./">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>名前</H2>
+
+erlc - コンパイラ
+<A NAME="lbAC">&nbsp;</A>
+<H2>説明</H2>
+
+<P>
+
+この <I>erlc</I> プログラムは Erlang システムですべてのコンパイラを実行する共通の方法を提供します。各入力ファイルの拡張次第で、<I>erlc</I> は適切なコンパイラを呼び出します。どのコンパイラが使用されるかに関係なく、インクルードパスや出力ディレクトリなどのパラメータが同じフラグで提供されます。
+<P>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>使い方</H2>
+
+<P>
+
+<B>erlc flags file1.ext file2.ext...</B>
+
+<BR>
+
+<DL COMPACT><DT><DD>
+<P>
+
+<I>Erlc</I> は1つかそれ以上のファイルをコンパイルします。そのファイルは拡張子を含まなければなりません、たとえば <I>.erl</I> は Erlang のソースコードであり、<I>.yrl</I> は Yecc のソースコードです。<I>Erlc</I> は 適切なコンパイラを呼び出すために拡張子を使用します。
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>一般的なフラグ</H2>
+
+<P>
+
+以下のフラグがサポートされています:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>-I </B><I>directory</I>:
+
+<DD>
+指定したディレクトリのインクルードファイルを検索するように指示します。<I>-include</I> や <I>-include_dir</I> ディレクティブに遭遇したとき、コンパイラは以下のディレクトリからヘッダーファイルを検索します:
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>1.<DD>
+<I>&quot;.&quot;</I>、これはファイルサーバーのカレントディレクトリです;
+<DT>2.<DD>
+コンパイルしたファイルの base name(訳注: ベースディレクトリ?)
+<DT>3.<DD>
+<I>-I</I> オプションを使用して指定されたディレクトリ。最後に指定されたディレクトリが最初に検索されます。
+</DL>
+</DL>
+
+</DL>
+
+<DT><B>-o </B><I>directory</I>:
+
+<DD>
+このディレクトリはコンパイラがファイルを出力すべきディレクトリです。もし指定しなかった場合、ファイルはカレントディレクトリに出力されるでしょう。
+<DT><B>-D</B><I>name</I>:
+
+<DD>
+マクロの定義。
+<DT><B>-D</B><I>name</I>=<I>value</I>:
+
+<DD>
+与えられた値と共にマクロを定義します。この値はあらゆる Erlang の term から成ります。機種依存により、シェル自身が解釈する特定の文字をクオートする必要があるかもしれません。Unix では、タプルやリストを含む terms はクオートされなければ成りません。すべてのプラッフォームでスペースを含む terms はクオートされなければ成りません。
+<DT><B>-W</B><I>number</I>:
+
+<DD>
+警告レベルを <I>number</I> に設定します。デフォルトは <I>1</I> です。<I>-W0</I> を使用することで警告を切ることが出来ます。
+<DT><B>-W:</B>
+
+<DD>
+<I>-W1</I>&nbsp;と同じです。これはデフォルトです。
+<DT><B>-v:</B>
+
+<DD>
+詳細な出力を有効にします。
+<DT><B>-b </B><I>output-type</I>:
+
+<DD>
+出力ファイルの種類を指定します。一般に <I>output-type</I> はピリオドを除いた出力ファイルの拡張子と同じです。このオプションはコンパイラが単一の出力フォーマットしか持たない場合は無視されます。
+<P>
+<DT><B>-hybrid:</B>
+
+<DD>
+コンパイラは hybrid-heap エミュレータを使用します。これは主にネイティブコードをコンパイルする際に役立ちます、このコードは実行するシステムと同じシステムでコンパイルされる必要があります。
+<DT><B>-smp:</B>
+
+<DD>
+SMP エミュレータを使用してコンパイルします。これは主にネイティブコードをコンパイルする際に役立ちます、このコードは実行するシステムと同じシステムでコンパイルされる必要があります。
+<DT><B>--:</B>
+
+<DD>
+これ以降はオプションが続かないというシグナルです。残りの引数はハイフンから始まったとしてファイル名として扱われるでしょう。
+<DT><B>+</B><I>term</I>:
+
+<DD>
+ハイフンでなくプラス ('<I>+</I>') で始まるフラグは Erlang term に変換され、そのままコンパイラに渡ります。実例として、以下の用に <I>export_all</I> オプションを Erlang コンパイラに指定することが出来ます:
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+<PRE>
+erlc +export_all file.erl
+</PRE>
+
+<P>
+
+<P>
+<P>
+
+機種依存により、シェル自身が解釈する特定の文字をクオートする必要があるかもしれません。Unix では、タプルやリストを含む terms はクオートされなければ成りません。すべてのプラッフォームでスペースを含む terms はクオートされなければ成りません。
+</DL>
+
+</DL>
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>特別フラグ</H2>
+
+<P>
+
+このセクションのフラグは OTP システムのリビルドなど、特別な状況で役立ちます。
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>-pa </B><I>directory</I>:
+
+<DD>
+呼び出された Erlang エミュレータのコードパスの先頭に <I>directory</I> を追加します。デフォルトのコンパイラから別のコンパイラを呼び出す事に使用できます。
+<DT><B>-pz </B><I>directory</I>:
+
+<DD>
+呼び出された Erlang エミュレータのコードパスの最後に <I>directory</I> を追加します。
+</DL>
+</DL>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>サポートするコンパイラ</H2>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>.erl:</B>
+
+<DD>
+Erlang ソースコード。これは <I>.beam</I> ファイルを生成します。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+このオプション -P, -E, -S は, シェルから保護するためにシングルクォートが必要で無いことを除き、+'P', +'E', +'S' と同等です。
+<BR>&nbsp;+'P',&nbsp;+'E',&nbsp;+'S'&nbsp;
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -I, -o, -D, -v, -W, -b
+</DL>
+
+<DT><B>.yrl:</B>
+
+<DD>
+Yecc ソースコード。これは <I>.erl</I> ファイルを生成します。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+カスタマイズしたプロローグファイルを使用するには、-I オプションにファイル名を指定してください(<I>includefile</I> オプション)。
+<P>
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -o, -v, -I, -W (上記を参照)。
+</DL>
+
+<DT><B>.mib:</B>
+
+<DD>
+SNMP の為の MIB です。これは <I>.bin</I> ファイルを生成します。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -I, -o, -W
+</DL>
+
+<DT><B>.bin:</B>
+
+<DD>
+SNMP の為のコンパイル済み MIB です。これは <I>.hrl</I> ファイルを生成します。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -o, -v
+</DL>
+
+<DT><B>.rel:</B>
+
+<DD>
+スクリプトファイル。これはブートファイルを生成します。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+-I オプションで指定したディレクトリ名を使用してアプリケーションファイルを検索します(<I>systools:make_script/2</I> のオプションリストの <I>path</I> と同等です)。
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -o
+</DL>
+
+<DT><B>.asn1:</B>
+
+<DD>
+ASN1 ファイル。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+<I>.asn1</I> ファイルから<I>.erl</I>, <I>.hrl</I>, <I>.asn1db</I> ファイルを生成します。また、Erlang コンパイラに <I>+noobj</I> オプションを与えた場合を除き <I>.erl</I> のコンパイルと同様です。
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -I, -o, -b, -W。
+</DL>
+
+<DT><B>.idl:</B>
+
+<DD>
+IC ファイル。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+IDL コンパイラを実行します。
+<P>
+
+<P>
+<P>
+
+サポートされるオプション: -I, -o
+</DL>
+
+</DL>
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>環境変数</H2>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>ERLC_EMULATOR:</B>
+
+<DD>
+エミュレータを開始する為のコマンド。<I>erl</I> コマンドが <I>PATH</I> で与えられた環境変数に存在しない場合、<I>erlc</I>　プログラムと同じディレクトリの <I>erl</I> がデフォルトになります。
+</DL>
+</DL>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>関連項目</H2>
+
+<P>
+
+<A HREF="./erl.html">erl</A>(1), <A HREF="./compile.html">compile</A>(3), <A HREF="./yecc.html">yecc</A>(3), <A HREF="./snmp.html">snmp</A>(3)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">名前</A><DD>
+<DT><A HREF="#lbAC">説明</A><DD>
+<DT><A HREF="#lbAD">使い方</A><DD>
+<DT><A HREF="#lbAE">一般的なフラグ</A><DD>
+<DT><A HREF="#lbAF">特別フラグ</A><DD>
+<DT><A HREF="#lbAG">サポートするコンパイラ</A><DD>
+<DT><A HREF="#lbAH">環境変数</A><DD>
+<DT><A HREF="#lbAI">関連項目</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://github.com/hamano/man2html/">man2html</A>,
+using the manual pages.<BR>
+Time: 14:18:09 GMT, May 05, 2009
+</BODY>
+</HTML>

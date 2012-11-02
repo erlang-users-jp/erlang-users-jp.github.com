@@ -1,0 +1,671 @@
+<HTML><HEAD><TITLE>Manpage of erl</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+</HEAD><BODY>
+<H1>erl</H1>
+Section: USER COMMANDS (1)<BR>Updated: erts  5.6.3<BR><A HREF="#index">Index</A>
+<A HREF="./">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>名前</H2>
+
+erl - Erlang エミュレータ
+<A NAME="lbAC">&nbsp;</A>
+<H2>説明</H2>
+
+<P>
+
+この <I>erl</I> プログラムは Erlang ランタイムシステムを開始します。正確な詳細は(例えば、<I>erl</I> がスクリプトかプログラムであるかや他のプログラムを呼び出すかどうかは)システム依存です。
+<P>
+
+恐らく Windows ユーザーは代わりにそれぞれのウィンドウとスクロールバーを持ちコマンドライン編集をサポートして実行される <I>werl</I> プログラムを使用したがります。Windows 上の <I>erl</I> プログラムではシェルでのライン編集を提供しませんし、Windows 95 上ではスクロールしたテキストをスクロールバックする方法は有りません。<I>erl</I> プログラムはパイプライン使うか必要なら標準入力や照準出力をリダイレクトしなければなりません。
+<A NAME="lbAD">&nbsp;</A>
+<H2>使い方</H2>
+
+<P>
+
+<B>erl &lt;引数&gt;</B>
+
+<BR>
+
+<DL COMPACT><DT><DD>
+<P>
+
+Erlang ランタイムシステムを開始します.
+<P>
+
+この引数は <I>エミュレータフラグ</I> と <I>フラグ</I> と <I>プレーン引数</I> に分けられます:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>*<DD>
+<I>+</I> から始まる引数はエミュレータフラグとして解釈されます。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+名前通り、エミュレータフラグはエミュレータの挙動をコントロールします。
+</DL>
+
+<DT>*<DD>
+<I>-</I> (ハイフン)から始まる引数は Erlang ランタイム部を通過すべきフラグとして解釈され、具体的には <I>init</I> システムによって処理されます、see <A HREF="./init.html">init</A>(3)。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+この init 処理では <I>init flags</I> と呼ばれる幾つかのフラグをそれ自身で解釈します。これはまた残りのフラグを <I>user flags</I> として格納します。これは後から <I>init:get_argument/1</I> を呼ぶことによって取得することが出来ます。
+<P>
+
+<P>
+<P>
+
+実際にはエミュレータフラグである &quot;-&quot; フラグが極少数存在する事に注意が必要です、以下の説明を見てください。
+</DL>
+
+<DT>*<DD>
+プレーン引数はどんな場合にも解釈されません。それらはまた<I>init</I> 処理によって格納され、<I>init:get_plain_arguments/0</I> が呼ばれる事による取得する事が出来ます。 プレーン引数は最初のフラグの後か <I>--</I> フラグの後に現れます。さらに <I>-extra</I> フラグによって後続の全てがプレーン引数になります。
+</DL>
+</DL>
+
+<P>
+
+例:
+<P>
+<PRE>
+% erl +W w -sname arnie +R 9 -s my_init -extra +bertie
+
+(arnie@host)1&gt; init:get_argument(sname).
+
+{ok,[[&quot;arnie&quot;]]}
+(arnie@host)2&gt; init:get_plain_arguments().
+
+[&quot;+bertie&quot;]
+</PRE>
+
+<P>
+
+この <I>+W w</I> と <I>+R 9</I> はエミュレータフラグです。<I>-s my_init</I> は初期化フラグで、<I>init</I> により処理されます。<I>-sname arnie</I> はユーザーフラグです、<I>init</I> により保存されます。それはカーネルに読み込まれ、Erlangランタイムシステムを分散させる要因となるでしょう。最後に、<I>-extra</I>(<I>+bertie</I>) 以降のすべてはプレーン引数とみなされます。
+<P>
+<PRE>
+% erl -myflag 1
+
+1&gt; init:get_argument(myflag).
+
+{ok,[[&quot;1&quot;]]}
+2&gt; init:get_plain_arguments().
+
+[]
+</PRE>
+
+<P>
+
+このユーザーフラグ <I>-myflag 1</I> は<I>init</I> プロセスを通過し、保存されます。それはユーザーの定義したフラグで、おそらくはユーザーの定義したアプリケーションによって使用されます。
+<P>
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>フラグ</H2>
+
+<P>
+
+以下の一覧は初期化フラグ(init flag)に分類されます。特別にに指定しない限り、その他の全てのフラグは <I>init:get_argument/1</I> を呼び出すことで取得する事が出来るユーザーフラグになります。このリストにユーザーフラグは含まれていないことに注意してください、それらはおそらく付加的なアプリケーション固有のフラグですので、アプリケーションに付随するドキュメントに記載されています。
+<P>
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B></B><I>--</I>(init flag):
+
+<DD>
+<I>--</I> 以降に続く全てのフラグ (<I>-flag</I> と <I>+flag</I>) はプレーン引数としてみなされ、<I>init:get_plain_arguments/0</I> を使用して取得できます。
+<P>
+<DT><B></B><I>-Application Par Val</I>:
+
+<DD>
+アプリケーション <I>Application</I> の為の構成パラメータ <I>Par</I> に値の <I>Val</I> を設定します、<A HREF="./app.html">app</A>(4) and <A HREF="./application.html">application</A>(3) を参照してください。
+<P>
+<DT><B></B><I>-args_file FileName</I>:
+
+<DD>
+<DL COMPACT><DT><DD>
+<P>
+
+コマンドライン引数はファイル <I>FileName</I> から読み込まれます。この引数はファイルを読み込み、コマンドラインの結果は '<I>-args_file FileName</I>' フラグを置き換えたものとなります。
+<P>
+
+<P>
+<P>
+
+この<I>FileName</I> で指定するファイルはプレーンテキストである必要があり、コメントとコマンドライン引数を含むことができます。# の文字から始まり行末までがコメントです。バックスラッシュ(\)は文字の引用に使用されます。<I>erl</I> で許可されている全てのコマンドが受け入れられます(<I>-args_file FileName</I> フラグも)。ただし、<I>-args_file</I> フラグの依存関係が巡回するケースに注意してください。
+<P>
+
+<P>
+<P>
+
+この<I>-extra</I>フラグは特別に処理されます。そのスコープはファイルの終端で終了します。コマンドライン上の<I>-extra</I>フラグ以降の引数は、<I>-extra</I>セクションへ移動します。すなわち、<I>-extra</I>フラグからコマンドラインの終端までです。
+</DL>
+
+<DT><B></B><I>-async_shell_start</I>:
+
+<DD>
+Erlangシェルの初期段階では起動手続きが完了するまでユーザーの入力を読み込みません(Erlang 5.4 以降)。このフラグは同期開始機能を無効化し、システムの空き時間を使用してシェルの開始を並列化します。
+<DT><B></B><I>-boot File</I>:
+
+<DD>
+ブートファイル名 <I>File を指定します。これはシステムを開始するときに使用されます。 参照 <A HREF="./init.html">init</A>(3)。File</I> に絶対パスを指定した場合を除き、システムは <I>File.boot</I> をカレントディレクトリと、<I>$ROOT/bin</I>ディレクトリから探索します。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+デフォルトは <I>$ROOT/bin/start.boot</I> です。
+</DL>
+
+<DT><B></B><I>-boot_var Var Dir</I>:
+
+<DD>
+もしブートスクリプトに <I>$ROOT</I> 以外のパス変数 <I>Var</I> が含まれていれば、この変数は <I>Dir</I>に展開されます。アプリケーションは <I>$ROOT/lib</I> とは別のディレクトリにインストールされたものを使用します。systools:make_script/1,2 を参照してください。
+<DT><B></B><I>-code_path_cache</I>:
+
+<DD>
+コードサーバーのコードパスキャッシュを有効にします。<A HREF="./code.html">code</A>(3)を参照してください。
+<DT><B></B><I>-compile Mod1 Mod2 ...</I>:
+
+<DD>
+指定した終端までの複数のモジュールをコンパイルします(終了コードがゼロ以外だった場合、いくつかのファイルのコンパイルは成功していません)。暗黙的に <I>-noinput</I> が使用されます。このフラグは推奨されません - 代わりに erlc を使用してください。
+<DT><B></B><I>-config Config</I>:
+
+<DD>
+コンフィグレーションファイル名 <I>Config.config</I> を指定します、これはアプリケーションを設定するために使用されます。 <A HREF="./app.html">app</A>(4) と <A HREF="./application.html">application</A>(3) を参照してください。
+<DT><B></B><I>-connect_all false</I>:
+
+<DD>
+<P>
+<DL COMPACT><DT><DD>
+<P>
+
+If this flag is present, <I>global</I> will not maintain a fully connected network of distributed Erlang nodes, and then global name registration cannot be used. See <A HREF="./global.html">global</A>(3).
+</DL>
+
+<DT><B></B><I>-cookie Cookie</I>:
+
+<DD>
+Obsolete flag without any effect and common misspelling for <I>-setcookie</I>. Use <I>-setcookie</I> instead.
+<DT><B></B><I>-detached</I>:
+
+<DD>
+Starts the Erlang runtime system detached from the system console. Useful for running daemons and backgrounds processes.
+<DT><B></B><I>-emu_args</I>:
+
+<DD>
+Useful for debugging. Prints out the actual arguments sent to the emulator.
+<DT><B></B><I>-env Variable Value</I>:
+
+<DD>
+Sets the host OS environment variable <I>Variable</I> to the value <I>Value</I> for the Erlang runtime system. Example:
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+<PRE>
+% erl -env DISPLAY gin:0
+
+</PRE>
+
+<P>
+
+<P>
+<P>
+
+In this example, an Erlang runtime system is started with the <I>DISPLAY</I> environment variable set to <I>gin:0</I>.
+</DL>
+
+<DT><B></B><I>-eval Expr</I>(init flag):
+
+<DD>
+Makes <I>init</I> evaluate the expression <I>Expr</I>, see <A HREF="./init.html">init</A>(3).
+<DT><B></B><I>-extra</I>(init flag):
+
+<DD>
+Everything following <I>-extra</I> is considered plain arguments and can be retrieved using <I>init:get_plain_arguments/0</I>.
+<DT><B></B><I>-heart</I>:
+
+<DD>
+Starts heart beat monitoring of the Erlang runtime system. See <A HREF="./heart.html">heart</A>(3).
+<DT><B></B><I>-hidden</I>:
+
+<DD>
+Starts the Erlang runtime system as a hidden node, if it is run as a distributed node. Hidden nodes always establish hidden connections to all other nodes except for nodes in the same global group. Hidden connections are not published on neither of the connected nodes, i.e. neither of the connected nodes are part of the result from <I>nodes/0</I> on the other node. See also hidden global groups, <A HREF="./global_group.html">global_group</A>(3).
+<DT><B></B><I>-hosts Hosts</I>:
+
+<DD>
+Specifies the IP addresses for the hosts on which Erlang boot servers are running, see <A HREF="./erl_boot_server.html">erl_boot_server</A>(3). This flag is mandatory if the <I>-loader inet</I> flag is present.
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+The IP addresses must be given in the standard form (four decimal numbers separated by periods, for example <I>&quot;150.236.20.74&quot;</I>. Hosts names are not acceptable, but a broadcast address (preferably limited to the local network) is.
+</DL>
+
+<DT><B></B><I>-id Id</I>:
+
+<DD>
+Specifies the identity of the Erlang runtime system. If it is run as a distributed node, <I>Id</I> must be identical to the name supplied together with the <I>-sname</I> or <I>-name</I> flag.
+<DT><B></B><I>-init_debug</I>:
+
+<DD>
+Makes <I>init</I> write some debug information while interpreting the boot script.
+<DT><B></B><I>-instr</I>(emulator flag):
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Selects an instrumented Erlang runtime system (virtual machine) to run, instead of the ordinary one. When running an instrumented runtime system, some resource usage data can be obtained and analysed using the module <I>instrument</I>. Functionally, it behaves exactly like an ordinary Erlang runtime system.
+</DL>
+
+<DT><B></B><I>-loader Loader</I>:
+
+<DD>
+Specifies the method used by <I>erl_prim_loader</I> to load Erlang modules into the system. See <A HREF="./erl_prim_loader.html">erl_prim_loader</A>(3). Two <I>Loader</I> methods are supported, <I>efile</I> and <I>inet</I>. <I>efile</I> means use the local file system, this is the default. <I>inet</I> means use a boot server on another machine, and the <I>-id</I>, <I>-hosts</I> and <I>-setcookie</I> flags must be specified as well. If <I>Loader</I> is something else, the user supplied <I>Loader</I> port program is started.
+<DT><B></B><I>-make</I>:
+
+<DD>
+Makes the Erlang runtime system invoke <I>make:all()</I> in the current working directory and then terminate. See <A HREF="./make.html">make</A>(3). Implies <I>-noinput</I>.
+<DT><B></B><I>-man Module</I>:
+
+<DD>
+Displays the manual page for the Erlang module <I>Module</I>. Only supported on Unix.
+<DT><B></B><I>-mode interactive | embedded</I>:
+
+<DD>
+Indicates if the system should load code dynamically (<I>interactive</I>), or if all code should be loaded during system initialization (<I>embedded</I>), see <A HREF="./code.html">code</A>(3). Defaults to <I>interactive</I>.
+<DT><B></B><I>-name Name</I>:
+
+<DD>
+Makes the Erlang runtime system into a distributed node. This flag invokes all network servers necessary for a node to become distributed. See <A HREF="./net_kernel.html">net_kernel</A>(3). It is also ensured that <I>epmd</I> runs on the current host before Erlang is started. See <A HREF="./epmd.html">epmd</A>(1).
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+The name of the node will be <I>Name@Host</I>, where <I>Host</I> is the fully qualified host name of the current host. For short names, use the <I>-sname</I> flag instead.
+</DL>
+
+<DT><B></B><I>-noinput</I>:
+
+<DD>
+Ensures that the Erlang runtime system never tries to read any input. Implies <I>-noshell</I>.
+<DT><B></B><I>-noshell</I>:
+
+<DD>
+Starts an Erlang runtime system with no shell. This flag makes it possible to have the Erlang runtime system as a component in a series of UNIX pipes.
+<DT><B></B><I>-nostick</I>:
+
+<DD>
+Disables the sticky directory facility of the Erlang code server, see <A HREF="./code.html">code</A>(3).
+<DT><B></B><I>-oldshell</I>:
+
+<DD>
+Invokes the old Erlang shell from Erlang 3.3. The old shell can still be used.
+<DT><B></B><I>-pa Dir1 Dir2 ...</I>:
+
+<DD>
+Adds the specified directories to the beginning of the code path, similar to <I>code:add_pathsa/1</I>. See <A HREF="./code.html">code</A>(3). As an alternative to <I>-pa</I>, if several directories are to be prepended to the code and the directories have a common parent directory, that parent directory could be specified in the <I>ERL_LIBS</I> environment variable. See <A HREF="./code.html">code</A>(3).
+<DT><B></B><I>-pz Dir1 Dir2 ...</I>:
+
+<DD>
+Adds the specified directories to the end of the code path, similar to <I>code:add_pathsz/1</I>. See <A HREF="./code.html">code</A>(3).
+<DT><B></B><I>-remsh Node</I>:
+
+<DD>
+Starts Erlang with a remote shell connected to <I>Node</I>.
+<DT><B></B><I>-rsh Program</I>:
+
+<DD>
+Specifies an alternative to <I>rsh</I> for starting a slave node on a remote host. See <A HREF="./slave.html">slave</A>(3).
+<DT><B></B><I>-run Mod [Func [Arg1, Arg2, ...]]</I>(init flag):
+
+<DD>
+Makes <I>init</I> call the specified function. <I>Func</I> defaults to <I>start</I>. If no arguments are provided, the function is assumed to be of arity 0. Otherwise it is assumed to be of arity 1, taking the list <I>[Arg1, Arg2, ...]</I> as argument. All arguments are passed as strings. See <A HREF="./init.html">init</A>(3).
+<DT><B></B><I>-s Mod [Func [Arg1, Arg2, ...]]</I>(init flag):
+
+<DD>
+Makes <I>init</I> call the specified function. <I>Func</I> defaults to <I>start</I>. If no arguments are provided, the function is assumed to be of arity 0. Otherwise it is assumed to be of arity 1, taking the list <I>[Arg1, Arg2, ...]</I> as argument. All arguments are passed as atoms. See <A HREF="./init.html">init</A>(3).
+<DT><B></B><I>-setcookie Cookie</I>:
+
+<DD>
+ノードのマジッククッキーを <I>Cookie</I> に設定します、erlang:set_cookie/2 を参照してください。
+<DT><B></B><I>-shutdown_time Time</I>:
+
+<DD>
+<I>init</I> プロセスがシステムのシャットダウンを許可するまでの時間(ミリ秒)を指定します。<I>Time</I> ミリ秒の時間を経過したら、既存のプロセスはすべて終了させられます。デフォルトでこの値は <I>infinity</I> です。
+<DT><B></B><I>-sname Name</I>:
+
+<DD>
+Erlangランタイムシステムは分散ノードの中で作られます。<I>-name</I> とよく似ていますがノード名 <I>Name@Host</I> のホスト名の部分を省略し、完全に修飾しません。
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+これは時々、DNS(Domain Name System)が動作していない場合で分散Erlangを実行する為の唯一の方法です。<I>-sname</I> フラグで実行したノードと <I>-name</I> フラグで実行したノードの間で通信を行うことは出来ませんが、ノード名は分散Erlangシステム内でユニークでなければなりません。
+<P>
+</DL>
+
+<DT><B></B><I>-smp [enable|auto|disable]</I>:
+
+<DD>
+<P>
+<DL COMPACT><DT><DD>
+<P>
+
+<I>-smp enable</I> と <I>-smp</I> は SMPサポートを有効にして Erlangランタイムシステムを起動します。もしランタイムシステムがSMPをサポートしていない場合に、これは失敗するかもしれません。<I>-smp auto</I> は SMPサポートを有効であり一つ以上の論理プロセッサを検出出来た場合に SMPサポートを有効にして Erlangランタイムシステムを起動します。<I>-smp disable</I> は SMPサポートを無効にして Erlangランタイムシステムを起動します。デフォルトでは <I>-smp auto</I> が使用されますが、競合するパラメータ通過した場合には <I>-smp disable</I> が使用されます。現在 <I>-smp auto</I> と競合するパラメーターは <I>-hybrid</I> だけです。
+<P>
+
+<P>
+<P>
+
+<I>ノート</I>: SMPをサポートしたランタイムシステムは全てのプラットホームでサポートされていません。+Sフラグを参照してください。
+<P>
+</DL>
+
+<DT><B></B><I>-version</I>(エミュレーターフラグ):
+
+<DD>
+エミュレーター自身のバージョン番号を表示します。<I>erl +V</I> と同じです。
+</DL>
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>エミュレーターフラグ</H2>
+
+<P>
+
+<I>erl</I> invokes the code for the Erlang emulator (virtual machine), which supports the following flags:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B></B><I>+a size</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Suggested stack size, in kilowords, for threads in the async-thread pool. Valid range is 16-8192 kilowords. The default suggested stack size is 16 kilowords, i.e, 64 kilobyte on 32-bit architectures. This small default size has been chosen since the amount of async-threads might be quite large. The default size is enough for drivers delivered with Erlang/OTP, but might not be sufficiently large for other dynamically linked in drivers that use the driver_async() functionality. Note that the value passed is only a suggestion, and it might even be ignored on some platforms.
+</DL>
+
+<DT><B></B><I>+A size</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Sets the number of threads in async thread pool, valid range is 0-1024. Default is 0.
+</DL>
+
+<DT><B></B><I>+B [c | d | i]</I>:
+
+<DD>
+The <I>c</I> option makes <I>Ctrl-C</I> interrupt the current shell instead of invoking the emulator break handler. The <I>d</I> option (same as specifying <I>+B</I> without an extra option) disables the break handler. The <I>i</I> option makes the emulator ignore any break signal.
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+If the <I>c</I> option is used with <I>oldshell</I> on Unix, <I>Ctrl-C</I> will restart the shell process rather than interrupt it.
+<P>
+
+<P>
+<P>
+
+Note that on Windows, this flag is only applicable for <I>werl</I>, not <I>erl</I> (<I>oldshell</I>). Note also that <I>Ctrl-Break</I> is used instead of <I>Ctrl-C</I> on Windows.
+</DL>
+
+<DT><B></B><I>+c</I>:
+
+<DD>
+Disable compensation for sudden changes of system time.
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+Normally, <I>erlang:now/0</I> will not immediately reflect sudden changes in the system time, in order to keep timers (including <I>receive-after</I>) working. Instead, the time maintained by <I>erlang:now/0</I> is slowly adjusted towards the new system time. (Slowly means in one percent adjustments; if the time is off by one minute, the time will be adjusted in 100 minutes.)
+<P>
+
+<P>
+<P>
+
+When the <I>+c</I> option is given, this slow adjustment will not take place. Instead <I>erlang:now/0</I> will always reflect the current system time. Note that timers are based on <I>erlang:now/0</I>. If the system time jumps, timers then time out at the wrong time.
+</DL>
+
+<DT><B></B><I>+h Size</I>:
+
+<DD>
+Sets the default heap size of processes to the size <I>Size</I>.
+<DT><B></B><I>+K true | false</I>:
+
+<DD>
+Enables or disables the kernel poll functionality if the emulator supports it. Default is <I>false</I> (disabled). If the emulator does not support kernel poll, and the <I>+K</I> flag is passed to the emulator, a warning is issued at startup.
+<DT><B></B><I>+l</I>:
+
+<DD>
+Enables auto load tracing, displaying info while loading code.
+<DT><B></B><I>+MFlag Value</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Memory allocator specific flags, see <A HREF="./erts_alloc.html">erts_alloc</A>(3) for further information.
+</DL>
+
+<DT><B></B><I>+P Number</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Sets the maximum number of concurrent processes for this system. <I>Number</I> must be in the range 16..134217727. Default is 32768.
+</DL>
+
+<DT><B></B><I>+R ReleaseNumber</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Sets the compatibility mode.
+<P>
+
+<P>
+<P>
+
+The distribution mechanism is not backwards compatible by default. This flags sets the emulator in compatibility mode with an earlier Erlang/OTP release <I>ReleaseNumber</I>. The release number must be in the range <I>7..&lt;current release&gt;</I>. This limits the emulator, making it possible for it to communicate with Erlang nodes (as well as C- and Java nodes) running that earlier release.
+<P>
+
+<P>
+<P>
+
+For example, an R10 node is not automatically compatible with an R9 node, but R10 nodes started with the <I>+R 9</I> flag can co-exist with R9 nodes in the same distributed Erlang system, they are R9-compatible.
+<P>
+
+<P>
+<P>
+
+Note: Make sure all nodes (Erlang-, C-, and Java nodes) of a distributed Erlang system is of the same Erlang/OTP release, or from two different Erlang/OTP releases X and Y, where <I>all</I> Y nodes have compatibility mode X.
+<P>
+
+<P>
+<P>
+
+For example: A distributed Erlang system can consist of R10 nodes, or of R9 nodes and R9-compatible R10 nodes, but not of R9 nodes, R9-compatible R10 nodes and &quot;regular&quot; R10 nodes, as R9 and &quot;regular&quot; R10 nodes are not compatible.
+</DL>
+
+<DT><B></B><I>+r</I>:
+
+<DD>
+Force ets memory block to be moved on realloc.
+<DT><B></B><I>+S Number</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Sets the number of scheduler threads to use when SMP support has been enabled. Valid range is 1-1024. If the Erlang runtime system is able to determine the number of processor cores available, the default value will equal the this value; otherwise, the default value will be one.
+<P>
+
+<P>
+<P>
+
+This flag will be ignored if the emulator doesn't have SMP support enabled (see the -smp flag).
+</DL>
+
+<DT><B></B><I>+T Level</I>:
+
+<DD>
+<BR>&nbsp;
+<DL COMPACT><DT><DD>
+<P>
+
+Enables modified timing and sets the modified timing level. Currently valid range is 0-9. The timing of the runtime system will change. A high level usually means a greater change than a low level. Changing the timing can be very useful for finding timing related bugs.
+<P>
+
+<P>
+<P>
+
+Currently, modified timing affects the following:
+<P>
+
+<P>
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>Process spawning:</B>
+
+<DD>
+A process calling <I>spawn</I>, <I>spawn_link</I>, <I>spawn_monitor</I>, or <I>spawn_opt</I> will be scheduled out immediately after completing the call. When higher modified timing levels are used, the caller will also sleep for a while after being scheduled out.
+<DT><B>Context reductions:</B>
+
+<DD>
+The amount of reductions a process is a allowed to use before being scheduled out is increased or reduced.
+<DT><B>Input reductions:</B>
+
+<DD>
+The amount of reductions performed before checking I/O is increased or reduced.
+</DL>
+</DL>
+
+<P>
+
+<P>
+<P>
+
+<I>NOTE:</I> Performance will suffer when modified timing is enabled. This flag is <I>only</I> intended for testing and debugging. Also note that <I>return_to</I> and <I>return_from</I> trace messages will be lost when tracing on the spawn BIFs. This flag may be removed or changed at any time without prior notice.
+</DL>
+
+<DT><B></B><I>+V</I>:
+
+<DD>
+Makes the emulator print out its version number.
+<DT><B></B><I>+v</I>:
+
+<DD>
+Verbose.
+<DT><B></B><I>+W w | i</I>:
+
+<DD>
+Sets the mapping of warning messages for <I>error_logger</I>. Messages sent to the error logger using one of the warning routines can be mapped either to errors (default), warnings (<I>+W w</I>), or info reports (<I>+W i</I>). The current mapping can be retrieved using <I>error_logger:warning_map/0</I>. See <A HREF="./error_logger.html">error_logger</A>(3) for further information.
+</DL>
+</DL>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>環境変数</H2>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B></B><I>ERL_CRASH_DUMP</I>:
+
+<DD>
+If the emulator needs to write a crash dump, the value of this variable will be the file name of the crash dump file. If the variable is not set, the name of the crash dump file will be <I>erl_crash.dump</I> in the current directory.
+<DT><B></B><I>ERL_CRASH_DUMP_NICE</I>:
+
+<DD>
+<I>Unix systems</I>: If the emulator needs to write a crash dump, it will use the value of this variable to set the nice value for the process, thus lowering its priority. The allowable range is 1 through 39 (higher values will be replaced with 39). The highest value, 39, will give the process the lowest priority.
+<DT><B></B><I>ERL_CRASH_DUMP_SECONDS</I>:
+
+<DD>
+<I>Unix systems</I>: This variable gives the number of seconds that the emulator will be allowed to spend writing a crash dump. When the given number of seconds have elapsed, the emulator will be terminated by a SIGALRM signal.
+<DT><B></B><I>ERL_AFLAGS</I>:
+
+<DD>
+The content of this environment variable will be added to the beginning of the command line for <I>erl</I>.
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+The <I>-extra</I> flag is treated specially. Its scope ends at the end of the environment variable content. Arguments following an <I>-extra</I> flag are moved on the command line into the <I>-extra</I> section, i.e. the end of the command line following after an <I>-extra</I> flag.
+</DL>
+
+<DT><B></B><I>ERL_ZFLAGS</I>and <I>ERL_FLAGS</I>:
+
+<DD>
+The content of these environment variables will be added to the end of the command line for <I>erl</I>.
+<DL COMPACT><DT><DD>
+<P>
+
+<P>
+<P>
+
+The <I>-extra</I> flag is treated specially. Its scope ends at the end of the environment variable content. Arguments following an <I>-extra</I> flag are moved on the command line into the <I>-extra</I> section, i.e. the end of the command line following after an <I>-extra</I> flag.
+</DL>
+
+<DT><B></B><I>ERL_LIBS</I>:
+
+<DD>
+This environment variable contains a list of additional library directories that the code server will search for applications and add to the code path. See <A HREF="./code.html">code</A>(3).
+</DL>
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>関連項目</H2>
+
+<P>
+
+<A HREF="./init.html">init</A>(3), <A HREF="./erl_prim_loader.html">erl_prim_loader</A>(3), <A HREF="./erl_boot_server.html">erl_boot_server</A>(3), <A HREF="./code.html">code</A>(3), <A HREF="./application.html">application</A>(3), <A HREF="./heart.html">heart</A>(3), <A HREF="./net_kernel.html">net_kernel</A>(3), <A HREF="./auth.html">auth</A>(3), <A HREF="./make.html">make</A>(3), <A HREF="./epmd.html">epmd</A>(1), <A HREF="./erts_alloc.html">erts_alloc</A>(3)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">名前</A><DD>
+<DT><A HREF="#lbAC">説明</A><DD>
+<DT><A HREF="#lbAD">使い方</A><DD>
+<DT><A HREF="#lbAE">フラグ</A><DD>
+<DT><A HREF="#lbAF">エミュレーターフラグ</A><DD>
+<DT><A HREF="#lbAG">環境変数</A><DD>
+<DT><A HREF="#lbAH">関連項目</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://github.com/hamano/man2html/">man2html</A>,
+using the manual pages.<BR>
+Time: 04:17:23 GMT, May 14, 2009
+</BODY>
+</HTML>
