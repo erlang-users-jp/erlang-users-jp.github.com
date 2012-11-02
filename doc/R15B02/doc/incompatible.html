@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:fn="http://www.w3.org/2005/02/xpath-functions">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="./otp_doc.css" type="text/css">
+<title>Erlang -- Potential Incompatibilities</title>
+</head>
+<body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000"><div id="container">
+<script id="js" type="text/javascript" language="JavaScript" src="./js/flipmenu/flipmenu.js"></script><script id="js2" type="text/javascript" src="./js/erlresolvelinks.js"></script><script language="JavaScript" type="text/javascript">
+            <!--
+              function getWinHeight() {
+                var myHeight = 0;
+                if( typeof( window.innerHeight ) == 'number' ) {
+                  //Non-IE
+                  myHeight = window.innerHeight;
+                } else if( document.documentElement && ( document.documentElement.clientWidth ||
+                                                         document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myHeight = document.documentElement.clientHeight;
+                } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myHeight = document.body.clientHeight;
+                }
+                return myHeight;
+              }
+
+              function setscrollpos() {
+                var objf=document.getElementById('loadscrollpos');
+                 document.getElementById("leftnav").scrollTop = objf.offsetTop - getWinHeight()/2;
+              }
+
+              function addEvent(obj, evType, fn){
+                if (obj.addEventListener){
+                obj.addEventListener(evType, fn, true);
+                return true;
+              } else if (obj.attachEvent){
+                var r = obj.attachEvent("on"+evType, fn);
+                return r;
+              } else {
+                return false;
+              }
+             }
+
+             addEvent(window, 'load', setscrollpos);
+
+             //--></script><div id="content">
+<div class="innertube">
+<h1>1 Potential Incompatibilities</h1>
+  
+  <p>This document contains a list of potential incompatibilities
+    between Erlang 5.8/OTP R14A and Erl 5.7.5/OTP R13B04,
+    and is an extract from the release notes for the respective applications.</p>
+
+  <h3><a name="id57833">1.1 
+        Tools</a></h3>
+    
+    <ul>
+        <li>
+          <p>
+	  Xref has been updated to use the re module instead of the
+	  deprecated regexp module.</p>          
+	  <p>*** INCOMPATIBILITY with R12B ***</p>
+          <p>
+	    Own Id: OTP-8472</p>
+        </li>
+        <li>
+	    <p>eprof has been reimplemented with support in the Erlang
+	      virtual machine and is now both faster (i.e. slows down the
+	      code being measured less) and scales much better. In
+	      measurements we saw speed-ups compared to the old eprof
+	      ranging from 6 times (for sequential code that only uses one
+	      scheduler/core) up to 84 times (for parallel code that uses 8
+	      cores).</p>
+
+	      <p>Note: The API for the eprof has been cleaned up and extended.
+	      See the documentation.</p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8706</p>
+        </li>
+    </ul>
+  
+
+  <h3><a name="id57880">1.2 
+        Odbc</a></h3>
+    
+    <ul>
+        <li>
+	    <p>
+	      Now supports SQL_TYPE_TIMESTAMP on the format {{YY, MM, DD},
+	      {HH, MM, SS}}. Thanks to Juhani RÃ¤nkimies.
+	    </p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8511</p>
+        </li>
+    </ul>
+  
+
+  <h3><a name="id57908">1.3 
+        Ssh</a></h3>
+    
+    <ul>
+     <li>
+          <p>
+            The configuration parameter ip_v6_disabled is now available,
+	      which makes it possible for the user to alter the IP version
+	      SSH shall use.</p>
+          <p>
+            *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+            Own Id: OTP-8535</p>
+     </li>
+     <li>
+          <p>
+            Removed deprecated modules (ssh_ssh, ssh_sshd and ssh_cm) and
+	      functions (ssh_sftp:connect and ssh_sftp:stop).</p>
+          <p>
+            *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+            Own Id: OTP-8596</p>
+     </li>
+     <li>
+          <p>
+            Aligned error message with used version (SSH_FX_FAILURE vs
+	      SSH_FX_NOT_A_DIRECTORY, the latter introduced in version 6).</p>
+          <p>
+            *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+            Own Id: OTP-8644</p>
+     </li>
+    </ul>
+  
+
+    <h3><a name="id58084">1.4 
+        ERTS</a></h3>
+    
+      <ul>
+        <li>
+          <p>Some incompatible changes made to the NIF API. For more
+	      information see the warning text in erl_nif(3).</p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8555</p>
+        </li>
+      </ul>
+    
+
+  <h3><a name="id58111">1.5 
+        STDLIB</a></h3>
+    
+    <ul>
+        <li>
+	    <p>When defining macros the closing right parenthesis before the
+	      dot is now mandatory.</p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8562</p>
+        </li>
+    </ul>
+  
+
+  <h3><a name="id58137">1.6 
+        Compiler and STDLIB</a></h3>
+    
+    <ul>
+        <li>
+          <p>
+             Local and imported functions now override the auto-imported
+	      BIFs when the names clash. The pre R14 behaviour was that
+	      auto-imported BIFs would override local functions. To avoid
+	      that old programs change behaviour, the following will
+	      generate an error:</p>
+
+	      <ul>
+	      <li>Doing a call without explicit module name to a local function
+	      having a name clashing with the name of an auto-imported BIF
+	      that was present (and auto-imported) before OTP R14A</li>
+
+	      <li>Explicitly importing a function having a name clashing with
+	      the name of an autoimported BIF that was present (and
+	      autoimported) before OTP R14A</li>
+
+	      <li>Using any form of the old compiler directive nowarn_bif_clash</li>
+	      </ul>
+
+	      <p>If the BIF was added or auto-imported in OTP R14A or later,
+	      overriding it with an import or a local function will only
+	      result in a warning.</p>
+
+	      <p>To resolve clashes, you can either use the explicit module
+	      name erlang to call the BIF, or you can remove the
+	      auto-import of that specific BIF by using the new compiler
+	      directive -compile({no_auto_import,[F/A]})., which makes all
+	      calls to the local or imported function without explicit
+	      module name pass without warnings or errors.</p>
+
+	      <p>The change makes it possible to add auto-imported BIFs
+	      without breaking or silently changing old code in the future.
+	      However some current code ingeniously utilizing the old
+	      behaviour or the nowarn_bif_clash compiler directive, might
+	      need changing to be accepted by the compiler.</p>
+          <p>
+            *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+            Own Id: OTP-8579</p>
+        </li>
+        <li>
+          <p>
+            The recently added BIFs erlang:min/2, erlang:max/2 and
+	      erlang:port_command/3 are now auto-imported (as they were
+	      originally intended to be). Due to the recent compiler change
+	      (OTP-8579), the only impact on old code defining it's own
+	      min/2, max/2 or port_command/3 functions will be a warning,
+	      the local functions will still be used. The warning can be
+	      removed by using
+	      -compile({no_auto_import,[min/2,max/2,port_command/3]}). in
+	      the source file.</p>
+          <p>
+            *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+            Own Id: OTP-8669</p>
+        </li>
+        <li>
+          <p>
+           Now, binary_to_term/2 is auto-imported. This will cause a
+	      compile warning if and only if a module has got a local
+	      function with that name.</p>
+          <p>
+            *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+            Own Id: OTP-8671</p>
+        </li>
+    </ul>
+  
+
+  <h3><a name="id58233">1.7 
+        Erl_interface</a></h3>
+    
+    <ul>
+        <li>
+	    <p>Compact IEEE 754 double encoding in external binary format
+	      for ei</p>
+
+	      <p>Implement the compact IEEE 754 double encoding in external
+	      binary format for ei. Encoding for ei now always produces the
+	      NEW_FLOAT_EXT format. Decoding and term printing handle both
+	      the old ERL_FLOAT_EXT encoding and the new NEW_FLOAT_EXT
+	      encoding.</p> 
+
+	      <p>Legacy erl_interface code also handles the new encoding, but
+	      still produces the ERL_FLOAT_EXT encoding by default.</p>
+
+	      <p>Also enable the DFLAG_NEW_FLOATS distribution flag.</p>
+
+	      <p>ei_get_type() will return ERL_FLOAT_EXT regardless if the
+	      external format is encoded with ERL_FLOAT_EXT or
+	      NEW_FLOAT_EXT for doubles.</p>
+
+	      <p>Reduce the number of copies of the code for encoding and
+	      decoding doubles throughout ei and erl_interface by instead
+	      calling the ei encoding and decoding functions wherever
+	      possible.</p>
+
+	      <p>Restore commented-out float tests in ei_decode_SUITE and
+	      ei_encode_SUITE in lib/erl_interface/test. Modify them to
+	      make them match the style of other tests in the same suites.</p>
+
+	      <p>These changes are based on an ei float patch from Serge
+	      Aleynikov originally submitted against R12B-2 in July 2008
+	      and reworked by Steve Vinoski May 2010.</p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8684</p>
+        </li>
+    </ul>
+  
+  <h3><a name="id57295">1.8 
+        Debugger and STDLIB</a></h3>
+    
+    <ul>
+        <li>
+	    <p> The predefined builtin type tid() has been removed. Instead,
+	      ets:tid() should be used.</p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8687</p>
+        </li>
+    </ul>
+  
+</div>
+<div class="footer">
+<hr>
+<p>Copyright © -2012 </p>
+</div>
+</div>
+</div></body>
+</html>
