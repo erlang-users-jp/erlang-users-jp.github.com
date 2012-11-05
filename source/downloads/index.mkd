@@ -1,0 +1,94 @@
+---
+title: Downloads
+---
+
+# Downloads
+
+Mirror of [Erlang/OTP downloads](http://erlang.org/download.html) located in Japan. [MD5 checksums](http://www.erlang.org/download/MD5)
+
+<table id="dl-tb" class="table table-hover">
+  <tbody>
+
+<tr>
+  <td>R11B-5</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R11B-5.readme">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R11B-5.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R11B-5.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R11B-5.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R12B-5</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R12B-5.readme">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R12B-5.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R12B-5.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R12B-5.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R13B03</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R13B03.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R13B03.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R13B03.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R13B03.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R13B04</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R13B04.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R13B04.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R13B04.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R13B04.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R14B01</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B01.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B01.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R14B01.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R14B01.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R14B02</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B02.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B02.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R14B02.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R14B02.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R14B03</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B03.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B03.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R14B03.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R14B03.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R14B04</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B04.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R14B04.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R14B04.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R14B04.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R15B01</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R15B01.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R15B01.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R15B01.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R15B01.tar.gz">man</a>
+  </td>
+</tr>
+<tr>
+  <td>R15B02</td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R15B02.tar.gz">source</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_src_R15B02.readme">readme</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_html_R15B02.tar.gz">html</a></td>
+  <td><a href="http://download.basho.co.jp.try-cs.ycloud.jp/download/otp_doc_man_R15B02.tar.gz">man</a>
+  </td>
+</tr>
+
+  </tbody>
+</table>
