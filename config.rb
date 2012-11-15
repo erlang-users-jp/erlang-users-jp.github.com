@@ -60,7 +60,7 @@ set :mkd, :layout_engine => :erb
 # end
 
 # Change the CSS directory
-# set :css_dir, "alternative_css_directory"
+set :css_dir, "css"
 
 # Change the JS directory
 # set :js_dir, "alternative_js_directory"
