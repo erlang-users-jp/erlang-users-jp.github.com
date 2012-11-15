@@ -2,5 +2,9 @@
 title: Main page
 
 ---
-
-# Erlang User Japan
+<div class="row-fluid">
+  <div class="span6">
+    <h2>Erlang Users Japan.</h2>
+    <p>description...</p>
+  </div>
+</div>
