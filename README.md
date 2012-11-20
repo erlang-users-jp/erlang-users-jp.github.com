@@ -8,7 +8,7 @@ website for the community
 ## Start preview server.
 
 ```
-gem instal bundle
+gem install bundle
 bundle install
 bundle exec middleman
 ```
@@ -22,3 +22,7 @@ bundle exec middleman build
 ## deploy
 
 TODO
+
+## contents to be
+
+https://gist.github.com/4007376
