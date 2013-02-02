@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:fn="http://www.w3.org/2005/02/xpath-functions">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="./otp_doc.css" type="text/css">
+<title>Erlang -- Highlights</title>
+</head>
+<body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000"><div id="container">
+<script id="js" type="text/javascript" language="JavaScript" src="./js/flipmenu/flipmenu.js"></script><script id="js2" type="text/javascript" src="./js/erlresolvelinks.js"></script><script language="JavaScript" type="text/javascript">
+            <!--
+              function getWinHeight() {
+                var myHeight = 0;
+                if( typeof( window.innerHeight ) == 'number' ) {
+                  //Non-IE
+                  myHeight = window.innerHeight;
+                } else if( document.documentElement && ( document.documentElement.clientWidth ||
+                                                         document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myHeight = document.documentElement.clientHeight;
+                } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myHeight = document.body.clientHeight;
+                }
+                return myHeight;
+              }
+
+              function setscrollpos() {
+                var objf=document.getElementById('loadscrollpos');
+                 document.getElementById("leftnav").scrollTop = objf.offsetTop - getWinHeight()/2;
+              }
+
+              function addEvent(obj, evType, fn){
+                if (obj.addEventListener){
+                obj.addEventListener(evType, fn, true);
+                return true;
+              } else if (obj.attachEvent){
+                var r = obj.attachEvent("on"+evType, fn);
+                return r;
+              } else {
+                return false;
+              }
+             }
+
+             addEvent(window, 'load', setscrollpos);
+
+             //--></script><div id="content">
+<div class="innertube">
+<h1>1 Highlights</h1>
+  
+  <p>This document lists some highlights of Erlang 5.8/OTP R14A
+    (unpatched), compared to the previous version Erlang 5.7.1/OTP R13B,
+    with focus on things not already released as R13B patches.</p>
+  <p>Note: This document was compiled at the time when R14A was released
+    and does not list any features introduced in R14 patches.</p>
+
+  <h3><a name="id57775">1.1 
+        Erlang Language and Run-time System</a></h3>
+    
+    <h4>New NIF features</h4>
+      
+      <ul>
+	      <li><p>Send messages from a NIF, or from thread created by NIF, to
+	      any local process (enif_send)</p></li>
+
+	      <li><p>Store terms between NIF calls (enif_alloc_env,
+	      enif_make_copy)</p></li>
+
+	      <li><p>Create binary terms with user defined memory management
+	      (enif_make_resource_binary)</p></li>
+
+	      <li><p>Some incompatible changes made to the API. For more
+	      information see the warning text in erl_nif(3).</p></li>
+	</ul>
+    
+    <h4>Receive optimizations</h4>
+      
+	<p>Receive statements that can only read out a newly created
+	   reference are now specially optimized so that it will execute
+	   in constant time regardless of the number of messages in the
+	   receive queue for the process. That optimization will benefit
+	   calls to gen_server:call(). (See gen:do_call/4 for an example
+	   of a receive statement that will be optimized.)</p>
+    
+    <h4>Improved eprof</h4>
+      
+      <p>eprof has been reimplemented with support in the Erlang
+	 virtual machine and is now both faster (i.e. slows down the
+	 code being measured less) and scales much better. In
+	 measurements we saw speed-ups compared to the old eprof
+	 ranging from 6 times (for sequential code that only uses one
+	 scheduler/core) up to 84 times (for parallel code that uses 8
+	 cores).</p>
+
+	 <p>Note: The API for the eprof has been cleaned up and extended.
+	 See the documentation.</p>
+    
+  
+  <h3><a name="id57843">1.2 
+        New features in Existing Applications</a></h3>
+    
+
+    <h4>Common_test</h4>
+      
+
+      <p>
+	      It is now possible for the user to provide specific callback
+	      modules that handle test configuration data, so that data on
+	      arbitray form can be accessed (e.g. by reading files or by
+	      communicating with a configuration server process). Two
+	      default callback modules have been introduced in Common Test:
+	      ct_config_plain and ct_config_xml. The former is used to
+	      handle the traditional Common Test configuration files (with
+	      terms on key-value tuple form) and the latter to handle
+	      configuration data on XML representation.
+      </p>
+      <p>
+	      The run_test script has been replaced by a program (with the
+	      same name) which can be executed without explicit
+	      installation. The start flags are the same as for the legacy
+	      start script.
+      </p>
+    
+    <h4>STDLIB</h4>
+      
+      <p>
+      The module binary from EEP31 (and EEP9) is implemented.
+      </p>
+    
+  
+</div>
+<div class="footer">
+<hr>
+<p>Copyright © -2012 </p>
+</div>
+</div>
+</div></body>
+</html>
