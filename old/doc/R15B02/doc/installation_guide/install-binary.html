@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:fn="http://www.w3.org/2005/02/xpath-functions">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../otp_doc.css" type="text/css">
+<title>Erlang -- Installing the Binary Release</title>
+</head>
+<body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000"><div id="container">
+<script id="js" type="text/javascript" language="JavaScript" src="../js/flipmenu/flipmenu.js"></script><script id="js2" type="text/javascript" src="../js/erlresolvelinks.js"></script><script language="JavaScript" type="text/javascript">
+            <!--
+              function getWinHeight() {
+                var myHeight = 0;
+                if( typeof( window.innerHeight ) == 'number' ) {
+                  //Non-IE
+                  myHeight = window.innerHeight;
+                } else if( document.documentElement && ( document.documentElement.clientWidth ||
+                                                         document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myHeight = document.documentElement.clientHeight;
+                } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myHeight = document.body.clientHeight;
+                }
+                return myHeight;
+              }
+
+              function setscrollpos() {
+                var objf=document.getElementById('loadscrollpos');
+                 document.getElementById("leftnav").scrollTop = objf.offsetTop - getWinHeight()/2;
+              }
+
+              function addEvent(obj, evType, fn){
+                if (obj.addEventListener){
+                obj.addEventListener(evType, fn, true);
+                return true;
+              } else if (obj.attachEvent){
+                var r = obj.attachEvent("on"+evType, fn);
+                return r;
+              } else {
+                return false;
+              }
+             }
+
+             addEvent(window, 'load', setscrollpos);
+
+             //--></script><div id="leftnav"><div class="innertube">
+<img alt="Erlang logo" src="../erlang-logo.png"><br><small><a href="users_guide.html">User's Guide</a><br><a href="../pdf/otp-system-documentation-5.9.2.pdf">PDF</a><br><a href="../index.html">Top</a></small><p><strong>Installation Guide</strong><br><strong>User's Guide</strong><br><small>Version 5.9.2</small></p>
+<br><a href="javascript:openAllFlips()">Expand All</a><br><a href="javascript:closeAllFlips()">Contract All</a><p><small><strong>Chapters</strong></small></p>
+<ul class="flipMenu" imagepath="../js/flipmenu">
+<li id="loadscrollpos" title="Installing the Binary Release" expanded="true">Installing the Binary Release<ul>
+<li><a href="install-binary.html">
+              Top of chapter
+            </a></li>
+<li title="UNIX"><a href="install-binary.html#id61017">UNIX</a></li>
+<li title="Windows"><a href="install-binary.html#id61581">Windows</a></li>
+</ul>
+</li>
+<li id="no" title="Installation Verification" expanded="false">Installation Verification<ul>
+<li><a href="verification.html">
+              Top of chapter
+            </a></li>
+<li title="UNIX"><a href="verification.html#id62547">UNIX</a></li>
+<li title="Windows"><a href="verification.html#id59423">Windows</a></li>
+</ul>
+</li>
+<li id="no" title="Building and Installing Erlang/OTP" expanded="false">Building and Installing Erlang/OTP<ul>
+<li><a href="INSTALL.html">
+              Top of chapter
+            </a></li>
+<li title="Introduction"><a href="INSTALL.html#id61164">Introduction</a></li>
+<li title="Daily Build and Test"><a href="INSTALL.html#id69200">Daily Build and Test</a></li>
+<li title="Versions Known NOT to Work"><a href="INSTALL.html#id62640">Versions Known NOT to Work</a></li>
+<li title="Required Utilities"><a href="INSTALL.html#id56569">Required Utilities</a></li>
+<li title="How to Build and Install Erlang/OTP"><a href="INSTALL.html#id61894">How to Build and Install Erlang/OTP</a></li>
+<li title="The Erlang/OTP Documentation"><a href="INSTALL.html#id62006">The Erlang/OTP Documentation</a></li>
+<li title="Support for SMP (Symmetric Multi Processing)"><a href="INSTALL.html#id62303">Support for SMP (Symmetric Multi Processing)</a></li>
+<li title="GS (Graphic System)"><a href="INSTALL.html#id71066">GS (Graphic System)</a></li>
+<li title="Using HiPE"><a href="INSTALL.html#id71082">Using HiPE</a></li>
+<li title="Mac OS X (Darwin)"><a href="INSTALL.html#id71311">Mac OS X (Darwin)</a></li>
+<li title="Building universal binaries on Mac OS X (obsolete information)"><a href="INSTALL.html#id71367">Building universal binaries on Mac OS X (obsolete information)</a></li>
+<li title="Building a fast Erlang VM on Mac OS Lion"><a href="INSTALL.html#id71446">Building a fast Erlang VM on Mac OS Lion</a></li>
+<li title="How to Build a Debug Enabled Erlang RunTime System"><a href="INSTALL.html#id71655">How to Build a Debug Enabled Erlang RunTime System</a></li>
+<li title="Authors"><a href="INSTALL.html#id71766">Authors</a></li>
+<li title="Copyright and License"><a href="INSTALL.html#id71794">Copyright and License</a></li>
+<li title="More Information"><a href="INSTALL.html#id71822">More Information</a></li>
+<li title="Modifying This Document"><a href="INSTALL.html#id71844">Modifying This Document</a></li>
+</ul>
+</li>
+<li id="no" title="Cross Compiling Erlang/OTP" expanded="false">Cross Compiling Erlang/OTP<ul>
+<li><a href="INSTALL-CROSS.html">
+              Top of chapter
+            </a></li>
+<li title="Introduction"><a href="INSTALL-CROSS.html#id72191">Introduction</a></li>
+<li title="Build and Install Procedure"><a href="INSTALL-CROSS.html#id72502">Build and Install Procedure</a></li>
+<li title="Testing the cross compiled system"><a href="INSTALL-CROSS.html#id73227">Testing the cross compiled system</a></li>
+<li title="Currently Used Configuration Variables"><a href="INSTALL-CROSS.html#id73312">Currently Used Configuration Variables</a></li>
+<li title="Copyright and License"><a href="INSTALL-CROSS.html#id74365">Copyright and License</a></li>
+<li title="Modifying This Document"><a href="INSTALL-CROSS.html#id74393">Modifying This Document</a></li>
+</ul>
+</li>
+<li id="no" title="How to Build Erlang/OTP on Windows" expanded="false">How to Build Erlang/OTP on Windows<ul>
+<li><a href="INSTALL-WIN32.html">
+              Top of chapter
+            </a></li>
+<li title="Introduction"><a href="INSTALL-WIN32.html#id74576">Introduction</a></li>
+<li title="Frequently Asked Questions"><a href="INSTALL-WIN32.html#id74682">Frequently Asked Questions</a></li>
+<li title="Tools you Need and Their Environment"><a href="INSTALL-WIN32.html#id75056">Tools you Need and Their Environment</a></li>
+<li title="The Shell Environment"><a href="INSTALL-WIN32.html#id75812">The Shell Environment</a></li>
+<li title="Building and Installing"><a href="INSTALL-WIN32.html#id75958">Building and Installing</a></li>
+<li title="Development"><a href="INSTALL-WIN32.html#id76259">Development</a></li>
+<li title="Using GIT"><a href="INSTALL-WIN32.html#id76501">Using GIT</a></li>
+<li title="Final Words"><a href="INSTALL-WIN32.html#id76536">Final Words</a></li>
+<li title="Copyright and License"><a href="INSTALL-WIN32.html#id76573">Copyright and License</a></li>
+<li title="Modifying This Document"><a href="INSTALL-WIN32.html#id76601">Modifying This Document</a></li>
+</ul>
+</li>
+</ul>
+</div></div>
+<div id="content">
+<div class="innertube">
+<h1>1 Installing the Binary Release</h1>
+  
+
+  <h3><a name="id61017">1.1 
+        UNIX</a></h3>
+    
+
+    <h4>Introduction</h4>
+      
+      <p>The system is delivered as a single compressed tar file.</p>
+      <p>To browse the on-line HTML documentation, Netscape or an equivalent
+        browser supporting frames is needed.</p>
+    
+
+    <h4>Installation Procedure</h4>
+      
+      <p>When installed, the entire system, except for a small start-up
+        script, resides in a single directory tree. The location of this
+        directory tree can be chosen arbitrarily by the installer, and it
+        does not need to be in the user's <span class="code">$PATH</span>. The only requirements
+        are that the file system where it is placed has enough free space,
+        and that the users who run Erlang/OTP have read access to it. In the
+        example below, the directory tree is assumed to be located at
+        <span class="code">/usr/local/erlang</span>, which is here called the <strong>top-level directory</strong>.</p>
+      <p>It is assumed that you have the compressed tar file, the name of
+        which is <span class="code">&lt;PREFIX&gt;.tar.gz</span>, where <span class="code">&lt;PREFIX&gt;</span> is a string
+        denoting the particular Erlang/OTP release, e.g.
+        <span class="code">otp_LXA_11930_sunos5_R9B</span>.</p>
+      <p>Wherever the string <span class="code">&lt;PREFIX&gt;</span> is used below, it should
+        be replaced by the actual name prefix of the compressed tar file.</p>
+      <p>The tape archive file does not have one single directory in which
+        all other files are rooted. Therefore the tape archive file must be
+        extracted into an empty (newly created) directory.</p>
+      <ul>
+        <li>
+          <p>If the <strong>top-level directory</strong> does not already exist,
+            create it:</p>
+          <div class="example"><pre>
+mkdir /usr/local/erlang</pre></div>
+        </li>
+        <li>
+          <p>Change the current directory to the <strong>top level directory</strong>:</p>
+          <div class="example"><pre>
+cd /usr/local/erlang</pre></div>
+        </li>
+        <li>
+          <p>Create the <strong>installation directory</strong> with an appropriate
+            name. For example:</p>
+          <div class="example"><pre>
+mkdir otp_r7b</pre></div>
+        </li>
+        <li>
+          <p>Change to the <strong>installation directory</strong>, e.g.</p>
+          <div class="example"><pre>
+cd otp_r7b</pre></div>
+        </li>
+        <li>
+          <p>Assuming the compressed tar file resides in the directory
+            <span class="code">&lt;SOME-DIR&gt;</span>,. extract the compressed tar file into the
+            current directory:</p>
+          <div class="example"><pre>
+gunzip -c &lt;SOME-DIR&gt;/&lt;PREFIX&gt;.tar.gz | tar xfp -</pre></div>
+        </li>
+        <li>
+          <p>Read the <span class="code">README</span> file in the installation directory for
+            last minute updates, before proceeding.</p>
+        </li>
+        <li>
+          <p>Run the <span class="code">Install</span> script in the installation directory,
+            with the absolute path of the installation directory as argument,</p>
+          <div class="example"><pre>
+./Install /usr/local/erlang/otp_r7b</pre></div>
+          <p>and supply answers to the prompts.</p>
+          <p>In most cases, there is a default answer in square brackets
+            (<span class="code">[]</span>). If the default is satisfactory, just press
+            <span class="code">&lt;Return&gt;</span>. In general you are only prompted for one thing:</p>
+          <ul>
+            <li>
+              <p>"Do you want to use a minimal system startup instead of the
+                SASL startup?"                <br>
+
+                In a minimal system, only the Kernel and STDLIB applications
+                are loaded and started. If the SASL startup is used, the SASL
+                application is included as well. Normally, the minimal system
+                is enough.</p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Make Erlang/OTP available for users, either by putting the path
+            <span class="code">/usr/local/erlang/otp_r7b/bin</span> in users <span class="code">$PATH</span>
+            variable, or link the executable
+            <span class="code">/usr/local/erlang/otp_r7b/bin/erl</span> accordingly, e.g.:</p>
+          <div class="example"><pre>
+ln -s /usr/local/erlang/otp_r7b/bin/erl /usr/local/bin/erl </pre></div>
+        </li>
+      </ul>
+    
+  
+
+  <h3><a name="id61581">1.2 
+        Windows</a></h3>
+    
+
+    <h4>Introduction</h4>
+      
+      <p>The system is delivered as a single <span class="code">.exe</span> file.</p>
+      <p>To browse the on-line HTML documentation, Netscape or an equivalent
+        browser supporting frames is needed.</p>
+    
+
+    <h4>Installation Procedure</h4>
+      
+      <p>The installation procedure is is automated. Double-click the
+        <span class="code">.exe</span> file icon and follow the instructions.</p>
+    
+  
+</div>
+<div class="footer">
+<hr>
+<p>Copyright © 1997-2012 Ericsson AB. All Rights Reserved.</p>
+</div>
+</div>
+</div></body>
+</html>
