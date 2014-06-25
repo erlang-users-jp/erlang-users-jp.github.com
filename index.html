@@ -63,6 +63,7 @@
       </ul>
 
       <p style="font: x-large; background-color: #bdf; padding: 1em;">
+        <a href="http://shop.ohmsha.co.jp/shop/shopdetail.html?brandcode=000000003873">「すごいErlangゆかいに学ぼう！」</a>が7月に出版されます。
       </p>
 
       <h2>Erlang/OTP mirror <a href="http://cloud.yahoo.co.jp/storage/">powered by Yahoo!JAPAN</a></h2>
@@ -119,6 +120,8 @@
       </dl>
       <h2>Erlang/OTP関連書籍</h2>
       <dl>
+        <dt><a href="http://shop.ohmsha.co.jp/shop/shopdetail.html?brandcode=000000003873">すごいErlangゆかいに学ぼう！</a></dt>
+        <dd><a href="http://www.amazon.co.jp/dp/1593274351/">Learn You Some Erlang for Great Good!</a>の日本語訳。これさえあれば他の本はほとんどいらない。</dd>
         <dt><a href="http://www.amazon.co.jp/dp/4274067149/">プログラミングErlang</a></dt>
         <dd>飛行機本または戦闘機本とよばれるErlangのバイブル。プログラミング言語Erlangの父Joe Armstrongがその哲学を熱く語った本。Erlang/OTPの設計思想を根本から理解できる。</dd>
         <dt><a href="http://pragprog.com/book/jaerlang/programming-erlang">Programming Erlang</a></dt><dd>その原著。</dd>
@@ -158,8 +161,19 @@
       Linux
 <pre>
 $ sudo aptitude install xsltproc fop libssl-dev
-$ ./configure --enable-m64-build --disable-hipe --enable-dtrace
+$ ./configure --enable-m64-build --disable-hipe --enable-dtrace --without-javac
 </pre>
+<!-- https://gist.github.com/voluntas/8911384
+./configure --enable-smp-support \
+            --enable-m64-build \
+            --enable-halfword-emulator \
+            --disable-native-libs \
+            --disable-sctp \
+            --enable-threads \
+            --enable-kernel-poll \
+            --disable-hipe \
+            --without-javac
+-->
 
       <h2>過去のイベント</h2>
       <ul>
