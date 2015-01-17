@@ -65,6 +65,14 @@
       <p style="font: x-large; background-color: #bdf; padding: 1em;">
       </p>
 
+      <h2>日本国内のミラーサイトを使って kerl でインストールする</h3>
+      <pre>$ curl -O https://raw.githubusercontent.com/erlang-users-jp/kerl/erlang-users-jp/kerl
+$ chmod 755 kerl
+$ ./kerl update releases
+$ ./kerl list releases
+$ KERL_CONFIGURE_OPTIONS=--disable-hipe ./kerl install 17.4 17.4-local
+     </pre>
+
       <h2>Erlang/OTP mirror <a href="http://cloud.yahoo.co.jp/storage/">powered by Yahoo!JAPAN</a></h2>
       <p>
         日本国内でホストしている <a href="http://erlang.org/download.html">Erlang/OTP ダウンロード</a> のミラーです ( <a href="http://www.erlang.org/download/MD5">MD5 チェックサム</a> )。
@@ -145,7 +153,7 @@
       </ul>
 
       <h2>tips</h2>
-      <h3>configure option</h3>
+      <h3>configure オプション サンプル</h3>
       MacOS with dtrace
       <pre>$ ./configure --enable-darwin-64bit --disable-hipe --enable-vm-probes --with-dynamic-trace=dtrace </pre>
       Linux
