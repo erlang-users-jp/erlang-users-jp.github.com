@@ -167,6 +167,15 @@ $ KERL_CONFIGURE_OPTIONS=--disable-hipe ./kerl install 17.5 17.5-local</pre>
       </div>
 
       <h2>tips</h2>
+      <h3>GitHub レポジトリからビルドする</h3>
+      最近はマイナーバージョンのリリースでは新しくダウンロードが追加されることがなくなったので、最新版のリリースに追従したい場合はGitHubのレポジトリから直接ビルドする必要がある。以下のサンプルは、18.0.2 とタグ付けされたリリースをビルドする例。
+      <pre>
+$ git clone git://github.com/erlang/otp --bare erlang.otp.upstream
+$ git clone erlang.otp.upstream otp.18.0
+$ cd otp.18.0
+% git checkout 18.0.2 -b release/18.0.2
+$ ./otp_build autoconf
+$ ./configure .....</pre>
       <h3>コンパイル サンプル</h3>
       MacOS with dtrace
       <pre>$ ./configure --enable-darwin-64bit --disable-hipe --enable-vm-probes --with-dynamic-trace=dtrace </pre>
