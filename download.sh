@@ -15,3 +15,11 @@ FILES="otp_doc_html_${VERSION}.tar.gz otp_doc_man_${VERSION}.tar.gz otp_src_${VE
 for FILE in $FILES; do
     wget $BASEURL/$FILE;
 done
+
+for FILE in $FILES; do
+    md5 $BASEURL/$FILE;
+done
+
+for FILE in $FILEs; do
+    echo "s3cmd -c config.s3cfg put $FILE s3://download.basho.co.jp/otp/download/";
+done
