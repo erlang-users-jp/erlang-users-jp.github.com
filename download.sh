@@ -17,9 +17,10 @@ for FILE in $FILES; do
 done
 
 for FILE in $FILES; do
-    md5 $BASEURL/$FILE;
+    md5 $FILE;
 done
 
-for FILE in $FILEs; do
-    echo "s3cmd -c config.s3cfg put $FILE s3://download.basho.co.jp/otp/download/";
+for FILE in $FILES; do
+    echo "s3cmd -c config.s3cfg put -P $FILE s3://download.basho.co.jp/otp/download/";
+    s3cmd -c config.s3cfg put -P $FILE s3://download.basho.co.jp/otp/download/;
 done
